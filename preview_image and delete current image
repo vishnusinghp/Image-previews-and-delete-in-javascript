@@ -1,0 +1,24 @@
+<div class="custom-file choose-file">
+        <input type="file" onchange = "abc('imgprv')" class="custom-file-input f" id="customFileLang" lang="es">
+        <img id="imgprv" class="custom-file-label" src="{{ URL('public/frontend/images/propert_img.jpg') }}">
+        <!-- <label class="custom-file-label" for="customFileLang"><i class="icofont-plus"></i></label> -->
+      </div>
+      <a href="javascript:void(0);" rmv-id = "f" data-id="imgprv" class="delete-photo imgprv d-none">Delete Photo</a>
+
+function abc(ids){
+  			var reader = new FileReader();
+			reader.onload = function(){
+			  var output = document.getElementById(ids);
+			  output.src = reader.result;
+			}
+			reader.readAsDataURL(event.target.files[0]);
+			$('.'+ids).removeClass('d-none'); 
+  		}
+
+  		$('.delete-photo').on('click',function(){
+			cls = $(this).attr('data-id');   
+			rmv = $(this).attr('rmv-id'); 
+			$('.'+rmv).val('');  
+			$('#'+cls).attr('src','');	
+			$('.'+cls).addClass('d-none');	   
+		});
