@@ -1,0 +1,19 @@
+<?php
+if(isset($_POST['submit']))
+{
+	echo '<pre>';
+	print_r($_FILES);
+	for($i=0;$i<COUNT($_FILES['picture']['name']);$i++) {
+		$file[$i]=$_FILES['picture']['name'][$i];
+		$ext[$i]=@pathinfo($file[$i], PATHINFO_EXTENSION);
+		$file_name[$i]='safetydoc_'.time().$i.".".$ext[$i];	
+		move_uploaded_file($_FILES["picture"]["tmp_name"][$i],"upload/".$file_name[$i]);
+	}
+}
+?>
+<form action="" method="post" enctype="multipart/form-data">
+	<input type="file" name="picture[]">
+	<input type="file" name="picture[]">
+	<input type="file" name="picture[]">
+	<input type="submit" name="submit">
+</form>
