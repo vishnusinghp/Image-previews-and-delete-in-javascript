@@ -1,0 +1,76 @@
+HTML:
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+</head>
+<body>
+
+<!-- <input type="file" id="file" name="file">
+
+<button onclick="upload();">Save</button> -->
+
+<form method="post" id="register_form" enctype="multipart/form-data">
+<input type="text" class="form-control" name="first_name">
+<input type="file" class="file" name="file[]">
+<input type="file" class="file" name="file[]">
+<a onclick="upload();">Save</a>
+</form>
+
+<div id='msg'></div>
+
+<script>
+function upload()
+{
+
+ var fd = new FormData();
+    // for multiple files
+    var length = $('.file').length;
+    for(var i = 0;i<length;i++){
+     var file_data = $('.file')[i].files;
+     console.log(file_data);
+        fd.append("file[]", file_data[0]);
+    }
+    var other_data = $('#register_form').serializeArray();
+    $.each(other_data,function(key,input){
+        fd.append(input.name,input.value);
+    });
+
+    console.log(length);
+    //return false;
+ 
+ $.ajax({
+     type: 'post',
+     url: 'uploadscript.php',
+     processData: false,
+        contentType: false,
+
+     data: fd,
+     success: function (response) {
+      console.log(response);
+     }
+  
+   });
+
+}
+</script>
+
+</body>
+</html>
+
+
+PHP SCRIPT:
+
+<?php
+
+for($i=0;$i<COUNT($_FILES['file']['name']);$i++) {
+  $file[$i]=$_FILES['file']['name'][$i];
+  $ext[$i]=@pathinfo($file[$i], PATHINFO_EXTENSION);
+  $file_name[$i]='safetydoc_'.time().$i.".".$ext[$i]; 
+  move_uploaded_file($_FILES["file"]["tmp_name"][$i],"upload/".$file_name[$i]);
+ }
+
+  echo json_encode(array('status'=>1,'message'=>'File upload success'));
+
+?>
