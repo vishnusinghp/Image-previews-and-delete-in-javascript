@@ -4,7 +4,7 @@
         <!-- <label class="custom-file-label" for="customFileLang"><i class="icofont-plus"></i></label> -->
       </div>
       <a href="javascript:void(0);" rmv-id = "f" data-id="imgprv" class="delete-photo imgprv d-none">Delete Photo</a>
-
+<script>
 function abc(ids){
   			var reader = new FileReader();
 			reader.onload = function(){
@@ -22,3 +22,4 @@ function abc(ids){
 			$('#'+cls).attr('src','');	
 			$('.'+cls).addClass('d-none');	   
 		});
+</script>
